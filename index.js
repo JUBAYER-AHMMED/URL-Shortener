@@ -1,26 +1,31 @@
 const express = require("express");
-const router = require("./routes/url.route");
+const urlRouter = require("./routes/url.route");
 const { connectToDB } = require("./connection");
-const URL = require("./models/url.model");
+
 const path = require("path");
 const app = express();
 
 const staticRouter = require("./routes/staticRouter");
+const userRoute = require("./routes/userRoute");
 
 const PORT = 8001;
 
 connectToDB("mongodb://localhost:27017/short-url")
   .then(() => console.log("MongoDB is connected"))
-  .catch((err) => console.log("MongoDb connection failed!"));
+  .catch((err) => {
+    console.log("MongoDb connection failed!");
+    process.exit(1);
+  });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/url", router);
+app.use("/url", urlRouter);
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 app.use("/", staticRouter);
+app.use("/user", userRoute);
 
 //server-side-rendering
 // app.get("/test", async (req, res) => {
