@@ -26,7 +26,7 @@ app.use("/url", restrictToLoggedinUserOnly, urlRouter); //inline middleware
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
-app.use("/", checkAuth, staticRouter);
+app.use("/", staticRouter);
 app.use("/user", userRoute);
 
 //server-side-rendering
