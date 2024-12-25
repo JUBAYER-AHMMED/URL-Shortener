@@ -3,10 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Signup</title>
+    <title>Login</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .error {
+        color: red;
+        margin-bottom: 10px;
+      }
+    </style>
   </head>
   <body>
     <div>
+      <!-- Error message display -->
+
+      <% if (locals.error) { %>
+      <p class="error"><%= error %></p>
+      <% } %>
+
+      <!-- main form part -->
       <form action="/user/login" method="post">
         <label>Email</label>
         <input type="text" required name="email" /> <br />

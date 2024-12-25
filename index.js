@@ -8,6 +8,8 @@ const app = express();
 const staticRouter = require("./routes/staticRouter");
 const userRoute = require("./routes/userRoute");
 
+const { restrictToLoggedinUserOnly, checkAuth } = require("./middlewares/auth");
+var cookieParser = require("cookie-parser");
 const PORT = 8001;
 
 connectToDB("mongodb://localhost:27017/short-url")
@@ -19,12 +21,12 @@ connectToDB("mongodb://localhost:27017/short-url")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-app.use("/url", urlRouter);
+app.use(cookieParser());
+app.use("/url", restrictToLoggedinUserOnly, urlRouter); //inline middleware
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
-app.use("/", staticRouter);
+app.use("/", checkAuth, staticRouter);
 app.use("/user", userRoute);
 
 //server-side-rendering
