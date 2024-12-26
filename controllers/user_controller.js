@@ -18,17 +18,30 @@ async function handleUserSignUp(req, res) {
 async function handlelogin(req, res) {
   const { email, password } = req.body;
 
-  const user = await USER.findOne({ email, password });
-  if (!user) {
-    return res.render("login", { error: "Invalid email or password!" });
+  try {
+    const user = await USER.findOne({ email, password });
+    if (!user) {
+      return res.render("login", { error: "Invalid email or password!" });
+    }
+
+    const token = setUser(user);
+
+    //check for accept header to determine the client type
+
+    const isBrowserRequest = req.headers["accept"]?.includes("text/html");
+    if (isBrowserRequest) {
+      res.cookie("uid", token, { httpOnly: true });
+
+      return res.redirect("/");
+    } else {
+      //mobile app or API client: send json response
+      return res.json({ token, message: "Login successful" });
+    }
+  } catch (error) {
+    console.error("Error logging in user:", error);
+
+    return res.status(500).json({ error: "Internal server error" });
   }
-  const sessionId = uuidv4();
-
-  setUser(sessionId, user);
-
-  res.cookie("uid", sessionId);
-
-  return res.redirect("/");
 }
 
 module.exports = {
