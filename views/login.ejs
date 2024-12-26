@@ -4,35 +4,268 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
+      * {
+        margin: 0;
+        padding: 0;
       }
+      body {
+        margin: 0;
+        padding: 0;
+        /* height: 100vh; */
+      }
+
+      .background2 {
+        position: absolute;
+        top: 0px;
+        width: 100%;
+        height: 103%;
+        /* -webkit-transform: skewY(12deg); */
+        transform: skewY(12deg);
+        /* -webkit-transform-origin: 100%; */
+        transform-origin: 100%;
+        background: -o-linear-gradient(
+          240deg,
+          #222222 15%,
+          #373737 70%,
+          #3c4859 94%
+        );
+        background: linear-gradient(
+          -150deg,
+          #222222 15%,
+          #373737 70%,
+          #3c4859 94%
+        );
+
+        z-index: -1;
+      }
+      .background2 span {
+        /* -webkit-transition: 0.4s all; */
+        /* -o-transition: 0.4s all; */
+        transition: 0.4s all;
+        position: absolute;
+        height: 190px;
+      }
+
+      .background2 span:nth-child(1) {
+        display: none;
+        top: 0;
+        width: 33.33333%;
+        right: -16.66666%;
+        background: #373737;
+      }
+
+      .background2 span:nth-child(2) {
+        width: 33.33333%;
+        top: -30px;
+        right: 16.66666%;
+        left: auto;
+        bottom: auto;
+        background: #2e2e2e;
+      }
+
+      .background2 span:nth-child(3) {
+        width: 33.33333%;
+        right: 49.99999%;
+        top: -30px;
+        bottom: auto;
+        left: auto;
+        background: #222222;
+      }
+
+      .background2 span:nth-child(4) {
+        width: 33.33333%;
+        top: 380px;
+        left: -16.66666%;
+        background: #383d44;
+      }
+
+      .background2 span:nth-child(5) {
+        width: 33.33333%;
+        right: 0;
+        bottom: 0;
+        background: #2e2e2e;
+      }
+
       .error {
         color: red;
         margin-bottom: 10px;
       }
+
+      .container {
+        position: relative;
+        z-index: 1;
+      }
+
+      .nav-link {
+        color: white !important; /* Force white text */
+      }
+      .logo img {
+        position: relative;
+        bottom: 5px;
+      }
+
+      .container2 img {
+        position: relative;
+        top: 63px;
+        left: 10px;
+        transform: rotate(-12deg);
+      }
+
+      input[type="text"] {
+        position: relative; /* Ensure it respects the z-index */
+        z-index: 10; /* Bring it to the front */
+        width: 300px;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+        background: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+        color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+        backdrop-filter: blur(10px); /* Glass effect */
+        -webkit-backdrop-filter: blur(10px); /* For Safari */
+        transition: all 0.3s ease;
+      }
+
+      input[type="text"]:focus {
+        background: rgba(255, 255, 255, 0.4); /* Brighter background on focus */
+        box-shadow: 0 6px 15px rgba(255, 255, 255, 0.5); /* Brighter shadow */
+      }
+
+      input[type="text"]::placeholder {
+        color: rgba(255, 255, 255, 0.7); /* Placeholder color */
+      }
+      .loginbtn {
+        border: none;
+        color: #ffffff;
+        background-color: #1da09c;
+        padding: 7px 12px;
+        border-radius: 15px;
+      }
+      .signup {
+        margin-top: 5px;
+        float: right;
+        position: relative;
+        right: 206px;
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+        color: #e6173aea;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      .signup img {
+        animation: float 3s ease-in-out infinite;
+        width: 250px;
+        position: relative;
+        left: 135px;
+        bottom: 10px;
+      }
+      .signupbtn {
+        border: none;
+        color: #ffffff;
+        background-color: #1d65a0b4;
+        padding: 7px 12px;
+        border-radius: 15px;
+      }
+      .actv {
+        color: gold !important;
+      }
     </style>
   </head>
   <body>
-    <div>
-      <!-- Error message display -->
+    <!-- //      -->
 
-      <% if (locals.error) { %>
-      <p class="error"><%= error %></p>
-      <% } %>
-
-      <!-- main form part -->
-      <form action="/user/login" method="post">
-        <label>Email</label>
-        <input type="text" required name="email" /> <br />
-        <label>Password</label>
-        <input type="text" required name="password" /> <br />
-
-        <button type="submit">Login</button>
-      </form>
+    <div class="background2">
+      <span></span><span></span><span></span><span></span><span></span>
     </div>
+
+    <div class="container1">
+      <header
+        class="d-flex flex-wrap align-items-center justify-content-around py-3 mb-4"
+      >
+        <div
+          class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-white logo"
+        >
+          <img src="./logo.png" alt="" style="width: 30px" />
+          <h2 class="lead fs-5 fw-bolder">LinkShrink</h2>
+        </div>
+
+        <ul
+          class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 fs-5 lead"
+        >
+          <li><a href="#" class="nav-link px-4 actv">Home</a></li>
+          <li><a href="#" class="nav-link px-4">Features</a></li>
+          <li><a href="#" class="nav-link px-4">Pricing</a></li>
+          <li><a href="#" class="nav-link px-4">FAQs</a></li>
+          <li><a href="#" class="nav-link px-4">About</a></li>
+        </ul>
+
+        <!-- <div class="col-md-3 text-end"> -->
+        <!-- <button type="button" class="btn btn-outline-primary me-2">
+          Login
+        </button>
+        <button type="button" class="btn btn-primary">Sign-up</button> -->
+        <!-- </div> -->
+      </header>
+    </div>
+
+    <main class="container2 d-flex justify-content-around">
+      <img src="./Screenshot from 2024-12-26 13-27-40 (1).png" alt="" />
+      <div class="content text-white mt-5">
+        <h2>Small URLs, Massive Reach.</h2>
+        <!-- Forget To Remember Your long URL -->
+        <div class="login">
+          <!-- //--// -->
+
+          <!-- Error message display -->
+
+          <% if (locals.error) { %>
+          <p class="error"><%= error %></p>
+          <% } %>
+
+          <!-- main form part -->
+          <form
+            action="/user/login"
+            method="post"
+            class="d-flex flex-column justify-content-center align-items-center"
+          >
+            <label>Email</label>
+            <input type="text" required name="email" /> <br />
+            <label>Password</label>
+            <input type="text" required name="password" /> <br />
+
+            <button class="loginbtn" type="submit">Login</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <div class="signup">
+      <h4>Haven't any account?</h4>
+      <a href="/signup">
+        <button class="signupbtn">Create Account ></button>
+      </a>
+      <img
+        src="./—Pngtree—e-learning online study for student_6527976.png"
+        alt=""
+      />
+    </div>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

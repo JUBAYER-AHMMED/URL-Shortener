@@ -21,8 +21,16 @@ connectToDB("mongodb://localhost:27017/short-url")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+//SERVE BOOTSTRAP TO EVERY ONE
+app.use(
+  "/bootstrap",
+  express.static(path.join(__dirname, "node_modules/bootstrap/dist"))
+);
 app.use(cookieParser());
 app.use("/url", restrictToLoggedinUserOnly, urlRouter); //inline middleware
+
+app.use(express.static(path.join(__dirname, "views"))); //cmnt
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
